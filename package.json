@@ -1,0 +1,30 @@
+{
+  "name": "fkrea",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@types/sharepoint": "^2016.1.2",
+    "axios": "^0.18.0",
+    "spsave": "^3.1.5",
+    "vue": "^2.6.6",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^7.0.0",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-typescript": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.1.0",
+    "typescript": "^3.0.0",
+    "vue-template-compiler": "^2.5.21",
+    "vuex-class": "^0.3.1"
+  }
+}

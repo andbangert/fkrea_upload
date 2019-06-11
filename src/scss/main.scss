@@ -1,0 +1,12 @@
+$colsize: 8.33%;
+$class-col: db-col !default;
+%db-col {
+    padding: 8px 8px 8px 8px;
+}
+
+@for $i from 1 through 12 {
+  .#{$class-col}-#{$i} {
+    width: $colsize*$i;
+    @extend %db-col;
+  }
+}
