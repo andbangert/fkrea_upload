@@ -54,7 +54,6 @@ export default class SaveEditButton extends Vue {
 
   onclick(command: SaveEditButtonKey) {
     // if command remove do nothing.
-    console.log(command);
     if (command !== SaveEditButtonKey.Remove) {
       this.active = !this.active;
     }

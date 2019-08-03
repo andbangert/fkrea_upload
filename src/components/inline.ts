@@ -8,7 +8,6 @@ export function createOnSaveDialogElement(elementId: string, dialogText: DialogT
         element = document.createElement('div');
         element.id = elementId;
     }
-
     const DialogComponent = Vue.extend({
         components: {
             OnSaveDialog,

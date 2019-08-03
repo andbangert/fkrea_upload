@@ -9,12 +9,13 @@ import {
     SET_UPLOAD_MODE,
     DELETE_FILE,
     SET_FILE_UNSAVED,
-    SAVE_FILE, 
+    SAVE_FILE,
     APPLY_CHANGES,
     SET_OPTIONS,
 } from './mutation-types';
 import { StateObject, StateFile, DocTypeSearchPattern, DocType, ItemData, UploadMode, AppOptions } from '../types';
 import { Fields } from '../utils/constants';
+import Vue from 'vue';
 
 export const mutations = {
     [SET_OPTIONS](state: StateObject, options: AppOptions) {
@@ -82,14 +83,15 @@ export const mutations = {
         sf.saved = true;
     },
     [SET_PROJECT_ITEM](state: StateObject, project: ItemData) {
-        state.projectItem = project;
+        Vue.set(state, 'projectItem', project);
     },
     [SET_FILE_ITEM_DATA](state: StateObject, payload: { fileName: string, item: ItemData }) {
         const file = state.files.find((f) => f.fileName === payload.fileName);
         if (!file) {
             throw new Error('File can not be null!');
         }
-        file.item = payload.item;
+        Vue.set(file, 'item', payload.item);
+        //file.item = payload.item;
     },
     [SET_UPLOAD_MODE](state: StateObject, mode: UploadMode) {
         if (mode !== UploadMode.Unknown) {
@@ -100,18 +102,18 @@ export const mutations = {
     },
     [DELETE_FILE](state: StateObject, payload: { file: StateFile }) {
         const sf = state.files.find((f) => f.fileName === payload.file.fileName);
-        if(!sf) {
-            throw new Error('File with name ' + payload.file.fileName + 
-            ' could not be found in the collection.');
+        if (!sf) {
+            throw new Error('File with name ' + payload.file.fileName +
+                ' could not be found in the collection.');
         }
         const index = state.files.indexOf(sf);
         state.files.splice(index, 1);
     },
     [SET_FILE_UNSAVED](state: StateObject, payload: { file: StateFile }) {
         const sf = state.files.find((f) => f.fileName === payload.file.fileName);
-        if(!sf) {
-            throw new Error('File with name ' + payload.file.fileName + 
-            ' could not be found in the collection.');
+        if (!sf) {
+            throw new Error('File with name ' + payload.file.fileName +
+                ' could not be found in the collection.');
         }
         sf.saved = false;
     },
@@ -121,12 +123,12 @@ export const mutations = {
             throw new Error('File can not be null!');
         }
 
-        console.log(payload.changedDocType)
-        console.log(file.docType)
-        if (file.docType.id !== payload.changedDocType.id) {
+        // console.log(payload.changedDocType)
+        // console.log(file.docType)
+        if (payload.changedDocType && file.docType.id !== payload.changedDocType.id) { // ERROR HERE
             file.docType = payload.changedDocType;
             if (file.docType.id <= 0) {
-                file.item[Fields.PartName] = null;
+                Vue.set(file.item, Fields.PartName, null);
             } else {
                 const lv = file.item[Fields.PartName] as SP.FieldLookupValue;
                 if (lv) {
@@ -134,7 +136,7 @@ export const mutations = {
                 } else {
                     const pn = new SP.FieldLookupValue();
                     pn.set_lookupId(payload.docType.id);
-                    file.item[Fields.PartName] = pn;
+                    Vue.set(file.item, Fields.PartName, pn);
                 }
             }
         }
@@ -142,7 +144,7 @@ export const mutations = {
         if (file.info !== payload.changedInfo) {
             file.info = payload.changedInfo;
             file.checkinComment = payload.changedInfo;
-            file.item[Fields.Comment] = file.info;
+            Vue.set(file.item, Fields.Comment, file.info);
         }
     },
 };

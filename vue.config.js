@@ -16,7 +16,7 @@ var creds = {
 };
 
 var fileOptions = {
-    folder: 'SitePages/js',
+    folder: 'SitePages/js/upload',
     glob: ['dist/js/*.*']
     // fileName: 'dist/js/app.js'
 };

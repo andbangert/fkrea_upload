@@ -117,7 +117,8 @@ export const actions: ActionTree<StateObject, StateObject> = {
                     });
                     docType = doctc ? doctc : { id: -1, title: '' };
                 }
-                const fileUrl = `${payload.siteUrl}${payload.folderUrl}/${element.fileName}`;
+                const trimmedFolderUrl = payload.folderUrl.trimEnd();
+                const fileUrl = `${payload.siteUrl}${trimmedFolderUrl}/${element.fileName}`;
                 // Element
                 const prfile = SPDataService.Current().getFile(payload.siteUrl, fileUrl);
                 // fetch uploaded file
@@ -260,8 +261,12 @@ export const actions: ActionTree<StateObject, StateObject> = {
     }) {
         if (state.files && state.files.length > 0) {
             state.files.forEach((file) => {
+                console.log('save');
+                console.log(file);
                 if (!file.saved) {
                     // Apply changes first.
+                    console.log('save');
+                    console.log(file);
                     commit(APPLY_CHANGES, file);
                     SPDataService.Current().saveFile(
                         payload.siteUrl,
@@ -269,6 +274,8 @@ export const actions: ActionTree<StateObject, StateObject> = {
                         file,
                         payload.checkinType,
                     ).then((f) => {
+                        console.log('sp save');
+                        console.log(file);
                         commit(SAVE_FILE, file);
                     }).catch((e) => {
                         throw e;
