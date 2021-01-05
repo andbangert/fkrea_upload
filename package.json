@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@types/sharepoint": "^2016.1.2",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "spsave": "^3.1.5",
     "vue": "^2.6.6",
     "vue-class-component": "^6.0.0",
